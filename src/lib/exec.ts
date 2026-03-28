@@ -12,7 +12,6 @@ export function runCommand(command: string, options: RunCommandOptions = {}): bo
   if (options.dryRun) return true;
   try {
     execSync(command, { stdio: options.stdio || 'inherit', cwd: options.cwd });
-    Logger.success(`✔ Command succeeded: ${command}`);
     return true;
   } catch (e) {
     Logger.error(`✖ Command failed: ${command}\n${e}`);

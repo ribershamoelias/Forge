@@ -97,9 +97,7 @@ export async function applyProfile(name: string) {
     if (error) {
       // Not installed, install
       const ok = await installTool(tool.name, { os: os.platform(), pkg: detectPkgMgr(), dryRun: false });
-      if (ok) {
-        Logger.success(`${tool.name} installed`);
-      } else {
+      if (!ok) {
         Logger.error(`Failed to install ${tool.name}`, [
           `Try manually: brew install ${tool.name}`
         ]);
@@ -107,7 +105,6 @@ export async function applyProfile(name: string) {
       }
     } else {
       // Already installed, check version
-      Logger.success(`${tool.name} already installed`);
       if (tool.version && currentVersion && compareVersions(currentVersion, tool.version) !== 0) {
         Logger.warn(`${tool.name} version differs (profile: ${tool.version}, current: ${currentVersion})`);
       }

@@ -35,15 +35,14 @@ export async function runSetup(opts: { preset?: string; dryRun?: boolean }) {
     if (step.type === 'tool') {
       Logger.step(`Installing ${step.name}`, i + 1, totalSteps);
       const ok = await installTool(step.name, ctx);
-      if (ok) {
-        Logger.success(`Installed ${step.name}`, stepTimer.elapsed());
-        installed.push(step.name);
-      } else {
+      if (!ok) {
         Logger.error(`Failed to install ${step.name}`, [
           'Check your internet connection',
           `Try manually: ${pkg} install ${step.name}`
         ]);
         warnings.push(step.name);
+      } else {
+        installed.push(step.name);
       }
     } else if (step.type === 'editor') {
       Logger.step('Configuring editor', i + 1, totalSteps);
