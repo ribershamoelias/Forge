@@ -48,7 +48,10 @@ function installViaPkg(tool: string, ctx: ToolInstallContext): boolean {
       Logger.success(`${tool.replace('python3', 'python')} already installed`);
       return true;
     }
-    Logger.error(`Failed to install ${tool}: ${e}`);
+    Logger.error(`Failed to install ${tool}`, [
+      'Check your internet connection',
+      `Try manually: ${cmd}`
+    ]);
     return false;
   }
 }

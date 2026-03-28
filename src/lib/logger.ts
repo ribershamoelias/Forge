@@ -53,6 +53,7 @@ export class Logger {
   }
   static error(msg: string, suggestions?: string[]) {
     if (!shouldLog('error')) return;
+    // Only log the main error message, never stack traces or raw error objects
     console.error(`${icon('error')} ${msg}`);
     if (suggestions && suggestions.length) {
       for (const s of suggestions) {

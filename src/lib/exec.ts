@@ -13,8 +13,11 @@ export function runCommand(command: string, options: RunCommandOptions = {}): bo
   try {
     execSync(command, { stdio: options.stdio || 'inherit', cwd: options.cwd });
     return true;
-  } catch (e) {
-    Logger.error(`✖ Command failed: ${command}\n${e}`);
+  } catch (e: any) {
+    Logger.error(`Command failed: ${command}`, [
+      'Check your internet connection',
+      'Try running the command manually for more details.'
+    ]);
     return false;
   }
 }

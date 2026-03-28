@@ -1,5 +1,6 @@
 
 import { Logger } from '../lib/logger.js';
+import { TOOL_VERSION_CHECKS, getToolVersion, compareVersions } from '../lib/version.js';
 
 export function runDoctor() {
   Logger.info('System Status:');
@@ -9,7 +10,9 @@ export function runDoctor() {
   for (const tool of TOOL_VERSION_CHECKS) {
     const { version, error } = getToolVersion(tool);
     if (error) {
-      Logger.error(`${tool.name} (missing)`);
+      Logger.error(`${tool.name} (missing)`, [
+        `Try manually: install ${tool.name}`
+      ]);
       missing.push(tool.name);
       continue;
     }

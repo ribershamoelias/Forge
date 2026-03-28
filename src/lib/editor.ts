@@ -42,7 +42,10 @@ export async function setupEditor(editorConfig: any, dryRun: boolean) {
         if (/already installed|already exists|is already installed/i.test(msg)) {
           Logger.success('VS Code already installed');
         } else {
-          Logger.error(`Failed to install VS Code: ${e}`);
+          Logger.error('Failed to install VS Code', [
+            'Check your internet connection',
+            'Try manually: brew install --cask visual-studio-code'
+          ]);
         }
       }
     }
@@ -73,7 +76,10 @@ export async function setupEditor(editorConfig: any, dryRun: boolean) {
         if (/already installed|already exists|is already installed/i.test(msg)) {
           Logger.success(`Extension ${ext} already installed`);
         } else {
-          Logger.error(`Failed to install extension ${ext}: ${e}`);
+          Logger.error(`Failed to install extension ${ext}`, [
+            'Check your internet connection',
+            `Try manually: code --install-extension ${ext}`
+          ]);
         }
       }
     }
