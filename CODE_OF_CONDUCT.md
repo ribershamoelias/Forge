@@ -9,4 +9,4 @@ All contributors and users of this project are expected to adhere to the followi
 
 Violations may result in removal from the project and revocation of rights under the license.
 
-For questions or to report issues, contact: riber@shamoelias.com
+For questions or to report issues, contact: r.s.elias@proton.me
