@@ -1,0 +1,11 @@
+{
+  "tools": ["git"],
+  "editor": {
+    "name": "vscode",
+    "extensions": []
+  },
+  "terminal": {
+    "shell": "bash",
+    "aliases": {}
+  }
+}

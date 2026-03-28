@@ -1,0 +1,30 @@
+{
+  "name": "forge",
+  "version": "0.1.0",
+  "description": "The standard way developers set up their machines.",
+  "main": "dist/cli.js",
+  "bin": {
+    "forge": "./bin/forge.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/forge.js",
+    "dev": "ts-node ./bin/forge.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^25.5.0",
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "fs-extra": "^11.3.4",
+    "inquirer": "^9.2.7",
+    "ora": "^7.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "tools": ["git", "node", "python", "docker"],
+  "editor": {
+    "name": "vscode",
+    "extensions": ["ms-python.python", "ms-azuretools.vscode-docker"]
+  },
+  "terminal": {
+    "shell": "zsh",
+    "aliases": {
+      "gs": "git status",
+      "pyv": "python --version"
+    }
+  }
+}
