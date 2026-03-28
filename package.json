@@ -1,6 +1,6 @@
 {
   "name": "@ribershamoelias/forge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The standard way developers set up their machines.",
   "main": "dist/cli.js",
   "bin": {
