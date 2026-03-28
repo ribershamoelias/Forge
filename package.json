@@ -12,7 +12,7 @@
     "dev": "ts-node ./bin/forge.ts"
   },
   "author": "",
-  "license": "MIT",
+  "license": "LOEL",
   "type": "commonjs",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",

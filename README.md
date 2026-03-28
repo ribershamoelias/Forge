@@ -24,12 +24,18 @@
   <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square" />
   <img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square" />
   <img src="https://img.shields.io/badge/Status-Active-22c55e?style=flat-square" />
+    <a href="https://www.npmjs.com/package/@ribershamoelias/forge"><img src="https://img.shields.io/npm/v/@ribershamoelias/forge?color=cb3837&label=npm&style=flat-square" /></a>
 </p>
 
 <!-- Command Box -->
 <pre>
 <code>npx forge setup</code>
 </pre>
+
+  <!-- NPM Package -->
+  <p>
+    <a href="https://www.npmjs.com/package/@ribershamoelias/forge">@ribershamoelias/forge on npm</a>
+  </p>
 
 </div>
 
@@ -90,16 +96,30 @@ $ forge profile apply web-dev
 
 ---
 
+
 ## ⚡ Quick Start
 
+### Install via npm (recommended)
+
 ```sh
-# 1. Install (macOS & Linux)
+npm install -g @ribershamoelias/forge
+```
+
+### Or use npx (no install required)
+
+```sh
+npx @ribershamoelias/forge setup
+```
+
+### Or use the legacy install script (macOS & Linux)
+
+```sh
 curl -fsSL https://forge.sh/install | sh
+```
 
-# 2. Setup your environment
-forge setup
+### Apply a profile
 
-# 3. Apply a profile
+```sh
 forge profile apply web-dev
 ```
 
