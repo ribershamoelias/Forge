@@ -271,7 +271,7 @@ Presets live in `presets/` and are merged with the base config at runtime. You c
 **From source:**
 
 ```bash
-git clone https://github.com/yourusername/forge
+git clone https://github.com/ribershamoelias/Forge
 cd forge
 npm install
 npm run build
