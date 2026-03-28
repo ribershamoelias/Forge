@@ -1,13 +1,24 @@
 {
-  "tools": ["git", "node", "python", "docker", "zsh"],
+  "tools": [
+    "git",
+    "node",
+    "docker",
+    "zsh"
+  ],
   "editor": {
     "name": "vscode",
-    "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
+    "extensions": [
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint"
+    ]
   },
   "terminal": {
     "shell": "zsh",
     "aliases": {
-      "gs": "git status"
+      "gs": "git status",
+      "npmi": "npm install"
     }
-  }
+  },
+  "docker": false,
+  "extensions": false
 }

@@ -1,5 +1,6 @@
 
 import { Command } from 'commander';
+// ...existing imports...
 import { runSetup } from './core/setup.js';
 import { runDoctor } from './core/doctor.js';
 import { runClean } from './core/clean.js';
@@ -8,6 +9,7 @@ import { runInit } from './core/init.js';
 import { Logger, setLogLevel } from './lib/logger.js';
 import { saveProfile, applyProfile, listProfiles } from './core/profile.js';
 
+const { version } = require('../package.json');
 const program = new Command();
 
 const profile = program.command('profile').description('Manage Forge profiles');
@@ -18,6 +20,9 @@ profile
   .action(async (name, opts, cmd) => {
     const parent = cmd.parent?.parent || program;
     if (parent.opts().silent) setLogLevel('silent');
+    if (parent.opts().verbose) setLogLevel('verbose');
+    await saveProfile(name);
+  });
 
 program
   .command('init')
@@ -29,9 +34,6 @@ program
       const msg = (err && typeof err === 'object' && 'message' in err) ? (err as any).message : String(err);
       Logger.error('✖ Failed to initialize Forge', [msg]);
     }
-  });
-    if (parent.opts().verbose) setLogLevel('verbose');
-    await saveProfile(name);
   });
 
 profile
@@ -59,7 +61,7 @@ profile
 program
   .name('forge')
   .description('The standard way developers set up their machines.')
-  .version('0.1.0')
+  .version(version)
   .option('--silent', 'Suppress all output except errors')
   .option('--verbose', 'Show verbose/debug output');
 
