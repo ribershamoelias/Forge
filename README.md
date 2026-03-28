@@ -170,7 +170,7 @@ If you find Forge useful, star the repo and share your feedback!
 
 ## License
 
-MIT
+LOEL 1.0
 
 Jump-start with opinionated, curated setups:
 
