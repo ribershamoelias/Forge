@@ -28,39 +28,45 @@ export async function runSetup(opts: { preset?: string; dryRun?: boolean }) {
   ];
   const totalSteps = steps.length;
   const installed: string[] = [];
+  const already: string[] = [];
   const warnings: string[] = [];
   for (let i = 0; i < steps.length; i++) {
     const step = steps[i];
     const stepTimer = new Logger.Timer();
     if (step.type === 'tool') {
-      Logger.step(`Installing ${step.name}`, i + 1, totalSteps);
-      const ok = await installTool(step.name, ctx);
-      if (!ok) {
+      Logger.step(`${step.name}`, i + 1, totalSteps);
+      const result = await installTool(step.name, ctx);
+      if (result === 'already') {
+        Logger.success(`${step.name} already installed`, stepTimer.elapsed());
+        already.push(step.name);
+      } else if (result === true) {
+        Logger.success(`${step.name} installed`, stepTimer.elapsed());
+        installed.push(step.name);
+      } else {
         Logger.error(`Failed to install ${step.name}`, [
           'Check your internet connection',
           `Try manually: ${pkg} install ${step.name}`
         ]);
         warnings.push(step.name);
-      } else {
-        installed.push(step.name);
       }
     } else if (step.type === 'editor') {
-      Logger.step('Configuring editor', i + 1, totalSteps);
+      Logger.step('editor', i + 1, totalSteps);
       await setupEditor(config.editor, ctx.dryRun);
       Logger.success('Editor configured', stepTimer.elapsed());
     } else if (step.type === 'terminal') {
-      Logger.step('Configuring terminal', i + 1, totalSteps);
+      Logger.step('terminal', i + 1, totalSteps);
       await setupTerminal(config.terminal, ctx.dryRun);
       Logger.success('Terminal configured', stepTimer.elapsed());
     }
   }
   // Final summary
   Logger.success(`Setup complete in ${totalTimer.elapsed()}`);
-  if (installed.length) Logger.info(`Installed: ${installed.join(', ')}`);
-  if (warnings.length) Logger.warn(`Warnings: ${warnings.length}`);
-  // Smart suggestions
-  if (!installed.length) {
-    Logger.info('Tip: Try `forge setup --preset web-dev`');
+  Logger.success(`${already.length + installed.length} tools verified`);
+  Logger.success(`${installed.length} installed`);
+  if (warnings.length) {
+    Logger.warn(`${warnings.length} warnings`);
+  } else {
+    Logger.success('0 warnings');
   }
 }
 

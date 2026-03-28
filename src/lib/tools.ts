@@ -9,7 +9,7 @@ export interface ToolInstallContext {
   dryRun: boolean;
 }
 
-const toolInstallers: Record<string, (ctx: ToolInstallContext) => boolean> = {
+const toolInstallers: Record<string, (ctx: ToolInstallContext) => Promise<'already' | true | false>> = {
   git: (ctx) => installViaPkg('git', ctx),
   node: (ctx) => installViaPkg('node', ctx),
   python: (ctx) => installViaPkg('python3', ctx),
@@ -17,8 +17,7 @@ const toolInstallers: Record<string, (ctx: ToolInstallContext) => boolean> = {
   zsh: (ctx) => installViaPkg('zsh', ctx),
 };
 
-function installViaPkg(tool: string, ctx: ToolInstallContext): boolean {
-  // Check if tool is already installed
+async function installViaPkg(tool: string, ctx: ToolInstallContext): Promise<'already' | true | false> {
   let checkCmd = '';
   if (tool === 'python3' || tool === 'python') checkCmd = 'python3 --version';
   else checkCmd = `${tool} --version`;
@@ -28,37 +27,28 @@ function installViaPkg(tool: string, ctx: ToolInstallContext): boolean {
     alreadyInstalled = true;
   } catch {}
   if (alreadyInstalled) {
-    Logger.success(`${tool.replace('python3', 'python')} already installed`);
-    return true;
+    return 'already';
   }
   let cmd = '';
   if (ctx.pkg === 'brew') cmd = `brew install ${tool}`;
   else if (ctx.pkg === 'apt') cmd = `sudo apt-get update && sudo apt-get install -y ${tool}`;
   else if (ctx.pkg === 'pacman') cmd = `sudo pacman -Sy --noconfirm ${tool}`;
   else throw new Error('Unsupported package manager');
-  Logger.info(`Installing ${tool} using ${ctx.pkg}...`);
   try {
-    // Suppress brew/apt/pacman warnings by capturing output
     execSync(cmd, { stdio: 'pipe' });
-    Logger.success(`${tool.replace('python3', 'python')} installed`);
     return true;
   } catch (e: any) {
     const msg = e?.stdout?.toString() || e?.message || '';
     if (/already installed|already exists|is already installed/i.test(msg)) {
-      Logger.success(`${tool.replace('python3', 'python')} already installed`);
-      return true;
+      return 'already';
     }
-    Logger.error(`Failed to install ${tool}`, [
-      'Check your internet connection',
-      `Try manually: ${cmd}`
-    ]);
     return false;
   }
 }
 
-export async function installTool(tool: string, ctx: ToolInstallContext): Promise<boolean> {
+export async function installTool(tool: string, ctx: ToolInstallContext): Promise<'already' | true | false> {
   if (toolInstallers[tool]) {
-    return toolInstallers[tool](ctx);
+    return await toolInstallers[tool](ctx);
   } else {
     Logger.warn(`No installer for tool: ${tool}`);
     return false;

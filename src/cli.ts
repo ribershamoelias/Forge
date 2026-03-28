@@ -4,6 +4,7 @@ import { runSetup } from './core/setup.js';
 import { runDoctor } from './core/doctor.js';
 import { runClean } from './core/clean.js';
 import { runList } from './core/list.js';
+import { runInit } from './core/init.js';
 import { Logger, setLogLevel } from './lib/logger.js';
 import { saveProfile, applyProfile, listProfiles } from './core/profile.js';
 
@@ -17,6 +18,18 @@ profile
   .action(async (name, opts, cmd) => {
     const parent = cmd.parent?.parent || program;
     if (parent.opts().silent) setLogLevel('silent');
+
+program
+  .command('init')
+  .description('Initialize Forge in this project')
+  .action(async () => {
+    try {
+      await runInit();
+    } catch (err) {
+      const msg = (err && typeof err === 'object' && 'message' in err) ? (err as any).message : String(err);
+      Logger.error('✖ Failed to initialize Forge', [msg]);
+    }
+  });
     if (parent.opts().verbose) setLogLevel('verbose');
     await saveProfile(name);
   });
@@ -67,11 +80,12 @@ program
 program
   .command('doctor')
   .description('Check your system for issues')
-  .action((opts, cmd) => {
+  .option('--fix', 'Automatically fix issues')
+  .action(async (opts, cmd) => {
     const parent = cmd.parent || program;
     if (parent.opts().silent) setLogLevel('silent');
     if (parent.opts().verbose) setLogLevel('verbose');
-    runDoctor();
+    await runDoctor({ fix: opts.fix });
   });
 
 

@@ -6,20 +6,18 @@ export async function setupEditor(editorConfig: any, dryRun: boolean) {
     Logger.warn('Only VS Code is supported for now.');
     return;
   }
-  // Check if VS Code is already installed
+  // Check if VS Code is already installed (macOS: app bundle or 'code' in PATH)
   let vsCodeInstalled = false;
-  if (process.platform === 'darwin') {
-    // Check for app bundle
-    try {
+  try {
+    if (process.platform === 'darwin') {
       execSync('test -d "/Applications/Visual Studio Code.app"');
       vsCodeInstalled = true;
-    } catch {}
-  } else if (process.platform === 'linux') {
-    try {
-      execSync('command -v code');
-      vsCodeInstalled = true;
-    } catch {}
-  }
+    }
+  } catch {}
+  try {
+    execSync('command -v code');
+    vsCodeInstalled = true;
+  } catch {}
   if (vsCodeInstalled) {
     Logger.success('VS Code already installed');
   } else {
@@ -33,11 +31,9 @@ export async function setupEditor(editorConfig: any, dryRun: boolean) {
       Logger.info(`[dry-run] Would run: ${cmd}`);
     } else {
       try {
-        // Suppress brew warnings by capturing output
         execSync(cmd, { stdio: 'pipe' });
         Logger.success('VS Code installed');
       } catch (e: any) {
-        // If already installed, treat as success
         const msg = e?.stdout?.toString() || e?.message || '';
         if (/already installed|already exists|is already installed/i.test(msg)) {
           Logger.success('VS Code already installed');
@@ -50,6 +46,7 @@ export async function setupEditor(editorConfig: any, dryRun: boolean) {
       }
     }
   }
+
   // Install extensions
   for (const ext of editorConfig.extensions || []) {
     let extInstalled = false;
@@ -68,7 +65,6 @@ export async function setupEditor(editorConfig: any, dryRun: boolean) {
       Logger.success(`Extension ${ext} already installed`);
     } else {
       try {
-        // Suppress warnings by capturing output
         execSync(`code --install-extension ${ext}`, { stdio: 'pipe' });
         Logger.success(`Extension ${ext} installed`);
       } catch (e: any) {
