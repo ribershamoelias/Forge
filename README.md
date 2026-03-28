@@ -19,7 +19,7 @@
 
 <!-- Badges -->
 <p>
-  <img src="https://img.shields.io/badge/License-MIT-22c55e?style=flat-square" />
+  <img src="https://img.shields.io/badge/License-LOEL-22c55e?style=flat-square" />
   <img src="https://img.shields.io/badge/Platform-macOS%20%7C%20Linux-6366f1?style=flat-square" />
   <img src="https://img.shields.io/badge/TypeScript-5.x-3178c6?style=flat-square" />
   <img src="https://img.shields.io/badge/Node.js-18%2B-339933?style=flat-square" />
@@ -356,7 +356,7 @@ Built to go further than any of them individually.
 
 ## License
 
-[MIT](LICENSE) — free to use, modify, and distribute.
+[LOEL](LICENSE) — free to use, modify, and distribute.
 
 ---
 
