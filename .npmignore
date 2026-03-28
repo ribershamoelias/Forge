@@ -1,0 +1,10 @@
+src
+node_modules
+.git
+.github
+*.log
+test
+.vscode
+*.ts
+*.md
+!README.md

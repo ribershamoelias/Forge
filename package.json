@@ -1,6 +1,6 @@
 {
-  "name": "forge",
-  "version": "0.1.0",
+  "name": "@ribershamoelias/forge",
+  "version": "1.0.0",
   "description": "The standard way developers set up their machines.",
   "main": "dist/cli.js",
   "bin": {
@@ -13,7 +13,7 @@
   },
   "author": "",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.5.0",
